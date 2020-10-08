@@ -36,13 +36,13 @@ public class UiScaleEffect : MonoBehaviour
         Vector2 startScale = normalDirection ? Vector2.zero : Vector2.one;
         Vector2 endScale = normalDirection ? Vector2.one : Vector2.zero;
 
-        float startProportion = (float) _rectTransform.localScale.x / animationTime;
+        float startProportion = _rectTransform.localScale.x / animationTime;
         float currentTime = normalDirection ? startProportion : (2f - startProportion);
 
         while(currentTime <= animationTime)
         {
             currentTime += Time.deltaTime;
-            float timeProportion = currentTime / animationTime;
+            float timeProportion = MathUtility.CurveAsc(currentTime) / animationTime;
             Vector2 scale = Vector2.Lerp(startScale, endScale, timeProportion);
             _rectTransform.localScale = scale;
             yield return null;
