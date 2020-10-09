@@ -13,6 +13,7 @@ public class UiScaleEffect : MonoBehaviour
     private RectTransform _rectTransform;
 
     private Coroutine _currentCoroutine = null;
+    private bool _normalDirection = true;
 
     void Awake()
     {
@@ -20,24 +21,20 @@ public class UiScaleEffect : MonoBehaviour
         _rectTransform.localScale = Vector2.zero;
     }
 
-    public void ScaleOut() 
+    public void Scale()
     {
         if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
-        _currentCoroutine = StartCoroutine(Scale(true));
+        _currentCoroutine = StartCoroutine(ScaleEffect());
+        _normalDirection = !_normalDirection;
     }
 
-    public void ScaleIn() {
-        if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
-        _currentCoroutine = StartCoroutine(Scale(false));
-    } 
-
-    private IEnumerator Scale(bool normalDirection)
+    private IEnumerator ScaleEffect()
     {
-        Vector2 startScale = normalDirection ? Vector2.zero : Vector2.one;
-        Vector2 endScale = normalDirection ? Vector2.one : Vector2.zero;
+        Vector2 startScale = _normalDirection ? Vector2.zero : Vector2.one;
+        Vector2 endScale = _normalDirection ? Vector2.one : Vector2.zero;
 
         float startProportion = _rectTransform.localScale.x / animationTime;
-        float currentTime = normalDirection ? startProportion : (2f - startProportion);
+        float currentTime = _normalDirection ? startProportion : (2f - startProportion);
 
         while(currentTime <= animationTime)
         {

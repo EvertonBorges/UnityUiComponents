@@ -9,7 +9,6 @@ public class UiSlideHorizontalEffect : MonoBehaviour
     [SerializeField] private float animationTime = 1f;
 
     private RectTransform _rectTransform;
-    private float screenHeight = Screen.height;
     private float screenWidth = Screen.width;
 
     private float leftPosition => -screenWidth * 2f;
@@ -17,8 +16,6 @@ public class UiSlideHorizontalEffect : MonoBehaviour
     private float rightPosition => screenWidth * 3f;
 
     private Coroutine _coroutine;
-
-    private List<Action> commands = new List<Action>();
 
     void Awake() {
         _rectTransform = GetComponent<RectTransform>();
